@@ -1,0 +1,29 @@
+{
+  "name": "array-between",
+  "version": "1.0.0",
+  "description": "(array between) returns a filtered copy of an array with only the specified range",
+  "main": "index.js",
+  "scripts": {
+     "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HashirHussain/array.between.git"
+  },
+  "keywords": [
+    "array",
+    "JavaScript",
+    "search",
+    "between",
+    "filter"
+  ],
+  "author": "Hashir Hussain",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/HashirHussain/array.between/issues"
+  },
+  "homepage": "https://github.com/HashirHussain/array.between#readme",
+  "devDependencies": {
+    "jest": "^24.8.0"
+  }
+}

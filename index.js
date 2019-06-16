@@ -45,7 +45,7 @@ function throwTypeError(message) {
 }
 
 function between(arr, start, till, includeLimits = true) {
-	if (arr !== undefined && !Array.isArray(arr)) {
+	if (arr === undefined && !Array.isArray(arr)) {
       	throwTypeError(`${EXPECTED_ARRAY}, found ${typeof arr}`);
     }
 

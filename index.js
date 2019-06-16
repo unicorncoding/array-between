@@ -24,27 +24,42 @@ SOFTWARE.
 
 'use strict';
 
-function skip(inputArray, skipIndex) {
-	return inputArray.filter(function(item, index) {
+const EXPECTED_ARRAY = 'argument must be an Array';
+const EXPECTED_NUMBER = 'argument must be a Number';
+const EXPECTED_BOOLEAN = 'argument must be Boolean';
+
+function skip(input, skipIndex) {
+	return input.filter(function(item, index) {
 		return Boolean(index > skipIndex - 1);
 	});
 }
 
-function limit(inputArray, limitIndex) {
-	return inputArray.filter(function (item, index) {
+function limit(input, limitIndex) {
+	return input.filter(function (item, index) {
 		return Boolean(index <= limitIndex - 1);
 	});
 }
 
-function between(arr, start, till, includeLimits) {
-	if (!Array.isArray(arr)) {
-      throw new TypeError('Expected first argument to be Array found '+ typeof arr);
-    }
-	const _start = start || 0;
-	const _till = till || arr.length;
-    const skiped = skip(arr, start);
+function throwTypeError(message) {
+	throw new TypeError(message);
+}
 
-    return limit(skiped, till);
+function between(arr, start, till, includeLimits = true) {
+	if (arr !== undefined && !Array.isArray(arr)) {
+      	throwTypeError(`${EXPECTED_ARRAY}, found ${typeof arr}`);
+    }
+
+    if (start !== undefined && typeof start !== 'number') {
+      	throwTypeError(`${EXPECTED_NUMBER}, found ${typeof start}`);
+    }
+
+    if(till !== undefined && typeof till !== 'number') {
+    	throwTypeError(`${EXPECTED_NUMBER}, found ${typeof till}`);
+    }
+
+    if(typeof includeLimits !== 'boolean') {
+    	throwTypeError(`${EXPECTED_BOOLEAN}, found ${typeof includeLimits}`);	
+    }
 }
 
 

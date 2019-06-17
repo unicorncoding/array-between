@@ -24,42 +24,46 @@ SOFTWARE.
 
 'use strict';
 
-const EXPECTED_ARRAY = 'argument must be an Array';
-const EXPECTED_NUMBER = 'argument must be a Number';
-const EXPECTED_BOOLEAN = 'argument must be Boolean';
-
 function skip(input, skipIndex) {
-	return input.filter(function(item, index) {
-		return Boolean(index > skipIndex - 1);
-	});
+    return input.filter(function(item, index) {
+        return Boolean(index > skipIndex - 1);
+    });
 }
 
 function limit(input, limitIndex) {
-	return input.filter(function (item, index) {
-		return Boolean(index <= limitIndex - 1);
-	});
+    return input.filter(function (item, index) {
+        return Boolean(index <= limitIndex);
+    });
 }
 
 function throwTypeError(message) {
-	throw new TypeError(message);
+    throw new TypeError(message);
 }
 
-function between(arr, start, till, includeLimits = true) {
-	if (arr === undefined && !Array.isArray(arr)) {
-      	throwTypeError(`${EXPECTED_ARRAY}, found ${typeof arr}`);
+function validateArguments(arr, start, end) {
+     if (!Array.isArray(arr)) {
+        throwTypeError(`Expected an Array, got ${typeof arr}`);
     }
 
-    if (start !== undefined && typeof start !== 'number') {
-      	throwTypeError(`${EXPECTED_NUMBER}, found ${typeof start}`);
+    if (typeof start !== 'number') {
+        throwTypeError(`Expcted start index to be number, got ${typeof start}`);
     }
 
-    if(till !== undefined && typeof till !== 'number') {
-    	throwTypeError(`${EXPECTED_NUMBER}, found ${typeof till}`);
+    if(typeof end !== 'number') {
+        throwTypeError(`Expected end index to be number, got ${typeof end}`);
     }
 
-    if(typeof includeLimits !== 'boolean') {
-    	throwTypeError(`${EXPECTED_BOOLEAN}, found ${typeof includeLimits}`);	
+    if (end < start) {
+        throw new RangeError('Invalid range provided');
     }
+}
+
+function between(arr, start, end) {
+    validateArguments(arr, start, end);
+
+    const skipped = skip(arr, start);
+
+    return limit(skipped, end - start);
 }
 
 

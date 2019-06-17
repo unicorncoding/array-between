@@ -24,40 +24,6 @@ SOFTWARE.
 
 'use strict';
 
-function skip(input, skipIndex) {
-    return input.filter(function(item, index) {
-        return Boolean(index > skipIndex - 1);
-    });
-}
-
-function limit(input, limitIndex) {
-    return input.filter(function (item, index) {
-        return Boolean(index <= limitIndex);
-    });
-}
-
-function throwTypeError(message) {
-    throw new TypeError(message);
-}
-
-function validateArguments(arr, start, end) {
-     if (!Array.isArray(arr)) {
-        throwTypeError(`Expected an Array, got ${typeof arr}`);
-    }
-
-    if (typeof start !== 'number') {
-        throwTypeError(`Expcted start index to be number, got ${typeof start}`);
-    }
-
-    if(typeof end !== 'number') {
-        throwTypeError(`Expected end index to be number, got ${typeof end}`);
-    }
-
-    if (end < start) {
-        throw new RangeError('Invalid range provided');
-    }
-}
-
 function between(arr, start, end) {
     validateArguments(arr, start, end);
 
@@ -66,6 +32,32 @@ function between(arr, start, end) {
     return limit(skipped, end - start);
 }
 
+
+function validateArguments(arr, start, end) {
+    if (!Array.isArray(arr)) {
+        new TypeError(`Expected an Array, got ${typeof arr}`);
+    }
+
+    if (typeof start !== 'number') {
+        new TypeError(`Expcted start index to be number, got ${typeof start}`);
+    }
+
+    if (typeof end !== 'number') {
+        new TypeError(`Expected end index to be number, got ${typeof end}`);
+    }
+
+    if (end < start) {
+        throw new RangeError(`Invalid range provided, start index (${start}) is bigger than end index (${end})`);
+    }
+}
+
+function skip(input, skipIndex) {
+  return input.filter(item, index) => index > skipIndex - 1;
+}
+
+function limit(input, limitIndex) {
+    return input.filter(item, index) => index <= limitIndex;
+}
 
 module.exports = between;
 
